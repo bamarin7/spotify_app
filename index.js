@@ -70,18 +70,19 @@ app.get('/callback', (req, res) => {
   })
     .then(response => {
       if (response.status === 200) {
-        const { access_token, refresh_token } = response.data;
+        const { access_token, refresh_token, expires_in } = response.data;
 
         const queryParams = querystring.stringify({
           access_token,
-          refresh_token
+          refresh_token,
+          expires_in,
         });
 
         // We want to redirect to react and pass along the tokens in the query params here
-        res.redirect(`http://localhost:3001/?${queryParams}`)
+        res.redirect(`http://localhost:3000/?${queryParams}`)
 
       } else {
-        res.redirect(`/?${querystring.stringify({ err: 'invalid_token'})}`);
+        res.redirect(`/?${querystring.stringify({ error: 'invalid_token'})}`);
       }
     })
     .catch(err => {
