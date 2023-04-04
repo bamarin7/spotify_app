@@ -70,30 +70,18 @@ app.get('/callback', (req, res) => {
   })
     .then(response => {
       if (response.status === 200) {
-        const { access_token, token_type } = response.data;
+        const { access_token, refresh_token } = response.data;
 
-        const { refresh_token } = response.data;
+        const queryParams = querystring.stringify({
+          access_token,
+          refresh_token
+        });
 
-        axios.get(`http://localhost:8888/refresh_token?refresh_token=${refresh_token}`)
-          .then(response => {
-            res.send(`<pre>${JSON.stringify(response.data, null, 2)}</pre>`);
-          })
-          .catch(err => {
-            res.send(err);
-          });
-        // axios.get('https://api.spotify.com/v1/me', {
-        //   headers: {
-        //     Authorization: `${token_type} ${access_token}`
-        //   }
-        // })
-        //   .then(response => {
-        //     res.send(`<pre>${JSON.stringify(response.data, null, 2)}</pre>`);
-        //   })
-        //   .catch(err => {
-        //     res.send(err);
-        //   });
+        // We want to redirect to react and pass along the tokens in the query params here
+        res.redirect(`http://localhost:3001/?${queryParams}`)
+
       } else {
-        res.send(response);
+        res.redirect(`/?${querystring.stringify({ err: 'invalid_token'})}`);
       }
     })
     .catch(err => {
