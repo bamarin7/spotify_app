@@ -151,3 +151,21 @@ export const getTopArtists = (time_range = 'short_term') => {
 export const getTopTracks = (time_range = 'short_term') => {
   return axios.get(`/me/top/tracks?time_range=${time_range}`);
 };
+
+/**
+ * Getting a single playlist by ID
+ * @param {string} playlist_id is the Spotify ID of the playlist
+ * @returns {Promise}
+ */
+export const getPlaylistById = playlist_id => {
+  return axios.get(`/playlists/${playlist_id}`);
+};
+
+/**
+ * Adding endpoint to get audio features for the tracks.
+ * @param {string} ids which will be separated by comma for the tracks
+ * @returns {Promise}
+ */
+export const getAudioFeatForTracks = ids => {
+  return axios.get(`/audio-features?ids=${ids}`);
+};
