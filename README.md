@@ -3,7 +3,7 @@
 Spotify Connected App built with Node.js and React.js.
 
 <div align="center">
-  <img src="client/public/og.png" alt="Spotify Connected App" width="400" />
+  <img src="client/public/og.png" alt="Spotify Connected App" width="600" />
   <br />
 </div>
 
